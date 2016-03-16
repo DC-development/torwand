@@ -1,7 +1,19 @@
 $(document).ready(function() {
     bezierMotion1();
 });
- 
+
+curveParams = function(e, v){
+
+  matrix = {
+    p0 : {x:580, y:210},
+    p1 : {x:520, y:10},
+    p2 : {x:500, y:10},
+    p3 : {x:480, y:108}
+  }
+  //console.log(matrix);
+  return matrix;
+}
+
 function bezierMotion1(){
    
   var breadcrumbs = new Array();
@@ -19,12 +31,6 @@ function bezierMotion1(){
   var t;
   ball_4.t=0;
   ball_4.speed=.025;
- 
-
-  var p0 = {x:580, y:210};
-  var p2 = {x:500, y:10};
-  var p1 = {x:520, y:10};
-  var p3 = {x:480, y:108};
   
    
   (function drawFrame() {
@@ -33,17 +39,18 @@ function bezierMotion1(){
   
   t=ball_4.t;
 
+  var matrix = curveParams("ha","hu");
 
-  var cx = 3 * (p1.x - p0.x)
-  var bx = 3 * (p2.x - p1.x) - cx;
-  var ax = p3.x - p0.x - cx - bx;
+  var cx = 3 * (matrix.p1.x - matrix.p0.x)
+  var bx = 3 * (matrix.p2.x - matrix.p1.x) - cx;
+  var ax = matrix.p3.x - matrix.p0.x - cx - bx;
   
-  var cy = 3 * (p1.y - p0.y);
-  var by = 3 * (p2.y - p1.y) - cy;
-  var ay = p3.y - p0.y - cy - by;
+  var cy = 3 * (matrix.p1.y - matrix.p0.y);
+  var by = 3 * (matrix.p2.y - matrix.p1.y) - cy;
+  var ay = matrix.p3.y - matrix.p0.y - cy - by;
   
-  var xt = ax*(t*t*t) + bx*(t*t) + cx*t + p0.x;
-  var yt = ay*(t*t*t) + by*(t*t) + cy*t + p0.y;
+  var xt = ax*(t*t*t) + bx*(t*t) + cx*t + matrix.p0.x;
+  var yt = ay*(t*t*t) + by*(t*t) + cy*t + matrix.p0.y;
    
   ball_4.t += ball_4.speed;
 
@@ -62,47 +69,47 @@ function bezierMotion1(){
   }
   //Draw the moving ball
   ball_4.draw(context);
-   
+ 
   //Draw the context point
   context.font ="10px Verdana";
   context.fillStyle = "#f16529";
   context.beginPath();
-  context.arc(p0.x,p0.y,8,0,Math.PI*2,true);
+  context.arc(matrix.p0.x,matrix.p0.y,8,0,Math.PI*2,true);
   context.closePath();
   context.fill();
   context.globalCompositeOperation = "source-over";
   context.fillStyle = "#FFFFFF";
-  context.fillText("0",p0.x-3,p0.y+3);
+  context.fillText("0",matrix.p0.x-3,matrix.p0.y+3);
    
   //Draw the first control point
   context.fillStyle = "#f16529";
   context.beginPath();
-  context.arc(p1.x,p1.y,8,0,Math.PI*2,true);
+  context.arc(matrix.p1.x,matrix.p1.y,8,0,Math.PI*2,true);
   context.closePath();
   context.fill();
   context.globalCompositeOperation = "source-over";
   context.fillStyle = "#FFFFFF";
-  context.fillText("1",p1.x-3,p1.y+3);
+  context.fillText("1",matrix.p1.x-3,matrix.p1.y+3);
    
   //Draw the second controlpoint
   context.fillStyle = "#f16529";
   context.beginPath();
-  context.arc(p2.x,p2.y,8,0,Math.PI*2,true);
+  context.arc(matrix.p2.x,matrix.p2.y,8,0,Math.PI*2,true);
   context.closePath();
   context.fill();
   context.globalCompositeOperation = "source-over";
   context.fillStyle = "#FFFFFF";
-  context.fillText("2",p2.x-3, p2.y+3);
+  context.fillText("2",matrix.p2.x-3, matrix.p2.y+3);
    
 //Draw the end point
   context.fillStyle = "#f16529";
   context.beginPath();
-  context.arc(p3.x,p3.y,8,0,Math.PI*2,true);
+  context.arc(matrix.p3.x,matrix.p3.y,8,0,Math.PI*2,true);
   context.closePath();
   context.fill();
   context.globalCompositeOperation = "source-over";
   context.fillStyle = "#FFFFFF";
-  context.fillText("3",p3.x-3, p3.y+3);
+  context.fillText("3",matrix.p3.x-3, matrix.p3.y+3);
    
   //draw the breadcrumbs
   //add an breadcrumb to the breadcrumbs array
