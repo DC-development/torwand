@@ -2,7 +2,7 @@ $(document).ready(function() {
     $("#button").on("click", function() {
         bezierMotion1(parseInt($("#direction").val()), parseInt($("#speed").val()), 580, 210, 25);
     });
-    canvas = jQuery("#bezier_motion1"); //Doubled no good
+   canvas = jQuery("#bezier_motion1"); //Doubled no good
 });
 
 
@@ -11,22 +11,22 @@ $(document).ready(function() {
 
 curveParams = function(d, v, bx, by) {
 
-    console.log("curve" + d, v)
-    
-
     // Set the base point from canvas width (center)
     base_x = jQuery(canvas).parent().width() / 2;
 
     // Convert degrees to radiant
     rd = d * (Math.PI / 180);
 
+    // Calculate endpoint of curve by dircetion and distance
     x2 = Math.round(bx + Math.cos(rd) * v);
     y2 = Math.round(by - Math.sin(rd) * v);
 
-    // Offset of controlpoints a and b 
+    // TODO: Calculate Offset of controlpoints a and b 
     xoffset_a = 10;
     xoffset_b = 20;
 
+    // TODO: calculate correct matrix for direction 
+    // Shoot right
     if (d < 90) {
         matrix = {
             p0: { x: bx, y: by }, //Start point (always centered)
@@ -35,6 +35,7 @@ curveParams = function(d, v, bx, by) {
             p3: { x: x2, y: y2 } //End of one  Motionsegment
         }
     }
+    // Shoot straight 90 degrees
     if (d == 90) {
       console.log("90 degrees");
         matrix = {
@@ -44,6 +45,7 @@ curveParams = function(d, v, bx, by) {
             p3: { x: x2, y: y2 } //End of one  Motionsegment
         }
     }
+    // Shoot left
     if (d > 90) {
         matrix = {
             p0: { x: bx, y: by }, //Start point (always centered)
@@ -54,14 +56,16 @@ curveParams = function(d, v, bx, by) {
     }
 
     //console.log(matrix);
-    console.log(x2, y2);
     return matrix;
 }
 
 function bezierMotion1(d, v, bx, by, radius) {
 
+    // Just for development to visualize curve and bezier-points
     var breadcrumbs = new Array();
     var crumbRadius = 1;
+    // End visualizing
+
     var canvas = jQuery("#bezier_motion1");
     var context = canvas.get(0).getContext("2d");
     var parentWidth = jQuery(canvas).parent().width();
@@ -72,12 +76,12 @@ function bezierMotion1(d, v, bx, by, radius) {
     //var ball_4 = new Ball(0,0,12,'#f16529','#000',7);
     var ball_4 = new Ball();
 
-    var speed;
     var t;
+
     ball_4.t = 0;
     ball_4.speed = .025;
-    ball_4.scaleX = 90;
-    ball_4.scaleY = 90;
+    ball_4.scaleX = 100;
+    ball_4.scaleY = 100;
 
     console.log(d, v, bx, by)
     var matrix = curveParams(d, v, bx, by);
@@ -86,7 +90,7 @@ function bezierMotion1(d, v, bx, by, radius) {
     drawFrame();
 
     function drawFrame() {
-        myLoop = window.requestAnimationFrame(drawFrame, canvas);
+        var myLoop = window.requestAnimationFrame(drawFrame, canvas);
         context.clearRect(0, 0, canvasWidth, canvasHeight); // clear canvas
 
         t = ball_4.t;
@@ -132,6 +136,7 @@ function bezierMotion1(d, v, bx, by, radius) {
         ball_4.drawBall(context);
 
        // ball_4.draw(context);
+
         /**
          * For development only not needed in Game !
          * This section draws all the control points for the curve and the dots (breadcrumbs) visualizing the curve
@@ -200,6 +205,5 @@ function bezierMotion1(d, v, bx, by, radius) {
             context.fillStyle = "#999";
             context.fill();
         }
-        //console.log("hu");
     } //end showBreadcrumb
 } //end bezierMotion1
