@@ -91,6 +91,7 @@ function bezierMotion1(d, v, bx, by, radius) {
 
         t = ball_4.t;
 
+        // Calcualting new position per cycle after bezier
         var cx = 3 * (matrix.p1.x - matrix.p0.x);
         var bx = 3 * (matrix.p2.x - matrix.p1.x) - cx;
         var ax = matrix.p3.x - matrix.p0.x - cx - bx;
@@ -102,9 +103,10 @@ function bezierMotion1(d, v, bx, by, radius) {
         var xt = ax * (t * t * t) + bx * (t * t) + cx * t + matrix.p0.x;
         var yt = ay * (t * t * t) + by * (t * t) + cy * t + matrix.p0.y;
 
+        // Incrementing stepper (stops at 1 starts at 0)
         ball_4.t += ball_4.speed;
 
-        // End of a curve animation
+        // End of a curve animation when t >= 1
         if (ball_4.t > 1) {
             ball_4.t = 1;
             console.log("end");
@@ -118,7 +120,7 @@ function bezierMotion1(d, v, bx, by, radius) {
             console.log("runnin");
         }
 
-        // New Coords for Ball and draw
+        // Assign new Coords to Ball 
         ball_4.x = xt;
         ball_4.y = yt;
         ball_4.scaleX = 50;
