@@ -1,6 +1,6 @@
 // JavaScript Document
 function Ball (x,y,radius,color,strokeColor,lineWidth) {
-	//ball2 = new Ball(2, Math.random() * 0xffffff,20,'#a3caff','#f16529',1);
+  //ball2 = new Ball(2, Math.random() * 0xffffff,20,'#a3caff','#f16529',1);
   if (x === undefined) { x = 0; }
   if (y === undefined) { y = 0; }
   if (radius === undefined) { radius = 20; }
@@ -39,6 +39,14 @@ Ball.prototype.draw = function (context) {
   context.restore();
   };
 
+// Implementation of drawBall loading an image
+Ball.prototype.drawBall = function (context) {
+    var imageObj = new Image();
+    imageObj.src = "football_cropped.png";
+    context.drawImage(imageObj, this.x-this.offsetX, this.y-this.offsetY, this.scaleX ,this.scaleY);
+  };
+
+
 Ball.prototype.getBounds = function () {
   return {
     x: this.x - this.radius,
@@ -49,7 +57,7 @@ Ball.prototype.getBounds = function () {
 };
 
 function Balla (x,y,radius,color,strokeColor,lineWidth) {
-	//ball2 = new Ball(2, Math.random() * 0xffffff,20,'#a3caff','#f16529',1);
+  //ball2 = new Ball(2, Math.random() * 0xffffff,20,'#a3caff','#f16529',1);
   if (x === undefined) { x = 0; }
   if (y === undefined) { y = 0; }
   if (radius === undefined) { radius = 20; }
@@ -63,7 +71,7 @@ function Balla (x,y,radius,color,strokeColor,lineWidth) {
   this.lineWidth = lineWidth;
   this.x = x;
   this.y = y;
-  this.rotation = 0; 
+  this.rotation = 0;
   this.scaleX = 1;
   this.scaleY = 1;
   //this.vx = 0;
@@ -92,7 +100,8 @@ Balla.prototype.getBounds = function () {
   return {
     x: this.x - this.radius,
     y: this.y - this.radius,
-    width: this.radius * 1,
-    height: this.radius * 1
+    width: this.radius * 2,
+    height: this.radius * 2
   };
 };
+  
