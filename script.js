@@ -5,7 +5,7 @@ $(document).ready(function() {
    canvas = jQuery("#bezier_motion1"); //Doubled no good
 });
 
-
+// Added
 // Pass in power(distance) , angle and startpoint 
 // and return matrix to iterate over in draw loop
 
